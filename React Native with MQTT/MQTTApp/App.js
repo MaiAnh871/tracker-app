@@ -1,6 +1,11 @@
-
+/* @flow */
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+} from 'react-native';
 
 import { Input, Button } from '@rneui/base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -80,6 +85,7 @@ class App extends Component {
     newmessageList = this.state.messageList;
     newmessageList.unshift(message.payloadString);
     this.setState({ messageList: newmessageList });
+    // this.MessageListRef.scrollToEnd({animated: false});
   }
 
   onChangeTopic = (text) => {
@@ -87,7 +93,7 @@ class App extends Component {
   }
 
   // Topic Subscription
-  subscribedTopic = () => {
+  subscribeTopic = () => {
     this.setState(
       { subscribedTopic: this.state.topic },
       () => {
@@ -132,6 +138,7 @@ class App extends Component {
       </View>
     )
   }
+
   _keyExtractor = (item, index) => item + index;
   render() {
     const { status, messageList } = this.state;
@@ -275,25 +282,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
-/*
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-*/
 
 export default App;
