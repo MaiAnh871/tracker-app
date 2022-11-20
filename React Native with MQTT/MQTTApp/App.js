@@ -1,8 +1,9 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Component, Fragment } from 'react';
-import { StyleSheet, Text, View, Button, FlatList, Input } from 'react-native';
-//import { FormControl as Control } from 'react-bootstrap';
 
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
+
+import { Input, Button } from '@rneui/base';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import init from 'react_native_mqtt';
 import * as SplashScreen from 'expo-splash-screen';
 
