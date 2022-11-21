@@ -40,6 +40,7 @@ class App extends Component {
       messageList: [],
       status: ''
     };
+
     client.onConnectionLost = this.onConnectionLost;
     client.onMessageArrived = this.onMessageArrived;
   }
