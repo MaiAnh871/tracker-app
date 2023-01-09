@@ -2,11 +2,11 @@ projects:
   amplifiedtodo:
     schemaPath: src/graphql/schema.json
     includes:
-      - ''
+      - src/graphql/**/*.js
     excludes:
       - ./amplify/**
     extensions:
       amplify:
         codeGenTarget: javascript
         generatedFileName: ''
-        docsFilePath: .
+        docsFilePath: src/graphql

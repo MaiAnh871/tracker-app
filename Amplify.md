@@ -226,235 +226,91 @@ Next, you will create a Home component for your app which will implement most of
 - TodoList: Used for displaying the list of Todos.
 - Home: Default component that wraps all the above component and a Button for adding a new Todo item.
 
-```bash
-import React, { useState, useEffect } from 'react';
-import {
-  FlatList,
-  Modal,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  Platform,
-} from 'react-native';
-import { DataStore } from 'aws-amplify';
-import { Todo } from './models';
-
-const Header = () => (
-  <View style={styles.headerContainer}>
-    <Text style={styles.headerTitle}>My Todo List</Text>
-  </View>
-);
-
-const AddTodoModal = ({ modalVisible, setModalVisible }) => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-
-  async function addTodo() {
-    //to be filled in a later step
-  }
-
-  function closeModal() {
-    setModalVisible(false);
-  }
-
-  return (
-    <Modal
-      animationType="fade"
-      onRequestClose={closeModal}
-      transparent
-      visible={modalVisible}
-    >
-      <View style={styles.modalContainer}>
-        <View style={styles.modalInnerContainer}>
-          <Pressable onPress={closeModal} style={styles.modalDismissButton}>
-            <Text style={styles.modalDismissText}>X</Text>
-          </Pressable>
-          <TextInput
-            onChangeText={setName}
-            placeholder="Name"
-            style={styles.modalInput}
-          />
-          <TextInput
-            onChangeText={setDescription}
-            placeholder="Description"
-            style={styles.modalInput}
-          />
-          <Pressable onPress={addTodo} style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>Save Todo</Text>
-          </Pressable>
-        </View>
-      </View>
-    </Modal>
-  );
-};
-
-const TodoList = () => {
-  const [todos, setTodos] = useState([]);
-
-  useEffect(() => {
-    //to be filled in a later step
-  }, []);
-
-  async function deleteTodo(todo) {
-    //to be filled in a later step
-  }
-
-  async function setComplete(updateValue, todo) {
-    //to be filled in a later step
-  }
-
-  const renderItem = ({ item }) => (
-    <Pressable
-      onLongPress={() => {
-        deleteTodo(item);
-      }}
-      onPress={() => {
-        setComplete(!item.isComplete, item);
-      }}
-      style={styles.todoContainer}
-    >
-      <Text>
-        <Text style={styles.todoHeading}>{item.name}</Text>
-        {`\n${item.description}`}
-      </Text>
-      <Text
-        style={[styles.checkbox, item.isComplete && styles.completedCheckbox]}
-      >
-        {item.isComplete ? '✓' : ''}
-      </Text>
-    </Pressable>
-  );
-
-  return (
-    <FlatList
-      data={todos}
-      keyExtractor={({ id }) => id}
-      renderItem={renderItem}
-    />
-  );
-};
-
-const Home = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-
-  return (
-    <>
-      <Header />
-      <TodoList />
-      <Pressable
-        onPress={() => {
-          setModalVisible(true);
-        }}
-        style={[styles.buttonContainer, styles.floatingButton]}
-      >
-        <Text style={styles.buttonText}>+ Add Todo</Text>
-      </Pressable>
-      <AddTodoModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-      />
-    </>
-  );
-};
-
-const styles = StyleSheet.create({
-  headerContainer: {
-    backgroundColor: '#4696ec',
-    paddingTop: Platform.OS === 'ios' ? 44 : 0,
-  },
-  headerTitle: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: '600',
-    paddingVertical: 16,
-    textAlign: 'center',
-  },
-  todoContainer: {
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 2,
-    elevation: 4,
-    flexDirection: 'row',
-    marginHorizontal: 8,
-    marginVertical: 4,
-    padding: 8,
-    shadowOffset: {
-      height: 1,
-      width: 1,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-  },
-  todoHeading: {
-    fontSize: 20,
-    fontWeight: '600',
-  },
-  checkbox: {
-    borderRadius: 2,
-    borderWidth: 2,
-    fontWeight: '700',
-    height: 20,
-    marginLeft: 'auto',
-    textAlign: 'center',
-    width: 20,
-  },
-  completedCheckbox: {
-    backgroundColor: '#000',
-    color: '#fff',
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: '600',
-    padding: 16,
-  },
-  buttonContainer: {
-    alignSelf: 'center',
-    backgroundColor: '#4696ec',
-    borderRadius: 99,
-    paddingHorizontal: 8,
-  },
-  floatingButton: {
-    position: 'absolute',
-    bottom: 44,
-    elevation: 6,
-    shadowOffset: {
-      height: 4,
-      width: 1,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-  },
-  modalContainer: {
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    flex: 1,
-    justifyContent: 'center',
-    padding: 16,
-  },
-  modalInnerContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 16,
-    justifyContent: 'center',
-    padding: 16,
-  },
-  modalInput: {
-    borderBottomWidth: 1,
-    marginBottom: 16,
-    padding: 8,
-  },
-  modalDismissButton: {
-    marginLeft: 'auto',
-  },
-  modalDismissText: {
-    fontSize: 20,
-    fontWeight: '700',
-  },
-});
-
-export default Home;
-```
 Go ahead and run your code now and you should see an app with empty todolist and a floating action button but not much else.
+
+## Manipulating data
+### Creating a Todo
+The Add Todo floating action button opens up a Modal to add todos. But, right now, the form does nothing when the Save button is pressed. Let’s fix that by having it save a Todo to DataStore.
+
+Open the Home.js file and update the `addTodo()` function in the `AddTodoModal` component.
+
+If you try to add todos using the form now, it should successfully close the form when pressing the Save button. But your Todo list is still empty even if you restart the app! After initializing your todos as an empty list, you aren't currently updating it again. You will remedy that in the next step.
+
+#### Error
+You will see a console error when you run your app "Datastore - Data won't synchronize".
+
+#### How to fix?
+This is expected and will be fixed in a future step once you connect your app to the cloud.
+
+### Querying for Todos and Observing Updates in Real-Time
+You also want to observe updates to those items as they are added, updated, or removed.
+
+This can be achieved with `DataStore.observeQuery()`. `observeQuery()` will return a Stream of query snapshots. Each snapshot will contain the current list of items, as well as boolean value to indicate if DataStore's sync process has completed.
+
+You will use the `useEffect()` hook of `TodoList` component to list the todo items. `useEffect()` can be used to perform side effects in function components.
+
+If you restart your app now, you should see that newly added todos will start showing up on the list. The items look like they can be check off and marked as completed, but when pressed, they don’t seem to do anything right now. Let’s learn how to update existing data.
+
+### Updating a Todo
+Updating an existing data entry looks a lot like creating a new one. It’s important to note, however, that models in DataStore are **immutable**. So, to update a record you must use a model’s `copyOf` function rather than manipulating its properties directly.
+
+Update the `setComplete` function in the `TodoList` component.
+
+You’re almost done here but what if you want to delete an item from your todo list? We’ll go over how to do that next.
+
+### Deleting a Todo
+Deleting an existing data entry is even easier than updating one since you don’t need to copy the instance to delete it.
+
+Update the `deleteTodo()` function in the `TodoList` component.
+
+Now you have a fully featured CRUD application that saves and retrieves data on the local device, which means this app **works without an AWS account or even an internet connection**. Next, you'll connect it to AWS and make sure the data is available in the cloud.
+
+# Connect to the cloud
+## Deploy your Amplify sandbox backend
+Return to the sandbox link you kept handy from earlier. It should look something like the following.
+```
+https://sandbox.amplifyapp.com/deploy/<UUID>
+```
+
+#### Log in or create a new AWS account
+If you don’t have an AWS account, you will need to create one first:
+
+- Select Create an AWS account
+- Once you have an account, select Login to deploy to AWS
+- When logged in, you will be taken to the Amplify Console
+
+#### Create app backend
+- Give your app a name. We went with `amplifiedtodo`.
+- Click Confirm deployment
+- Enable Amplify Studio.
+- Select Backend Environment.
+- Click **Launch Studio**.
+
+##### Error
+```
+An error occurred while fetching the app backend: Missing credentials in config, if using AWS_CONFIG_FILE, set AWS_SDK_LOAD_CONFIG=1
+```
+
+##### How to fix?
+```bash
+> set AWS_ACCESS_KEY_ID="your_key_id"
+> set AWS_SECRET_ACCESS_KEY="your_secret_key"
+```
+## Deploy data model
+Click Save and Deploy.
+Wait form some minutes.
+Step 1: Successfully deployed data model
+Step 2: Pull latest client config
+```bash
+amplify pull --appId dc6jwhgktw8g3 --envName dev
+```
+
+## Add authentication
+### Deploy authentication
+- Select Authentication from the sidebar
+- Click Save and deploy with the default configuration
+- Click Confirm deployment when prompted
+
 
 
 
