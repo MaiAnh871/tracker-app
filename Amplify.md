@@ -305,11 +305,50 @@ Step 2: Pull latest client config
 amplify pull --appId dc6jwhgktw8g3 --envName dev
 ```
 
-## Add authentication
+After Deploy, `Welcome back to amplifiedtodo's
+dev environment`.
+
+## Add Authentication
+Since your Todo model specifies an `@auth` directive, you do need to first add authentication.
+
 ### Deploy authentication
 - Select Authentication from the sidebar
 - Click Save and deploy with the default configuration
 - Click Confirm deployment when prompted
+
+### Update local project with deployed environment
+- After deployment, click on Local setup instructions at the top of Amplify Studio.
+- Copy the command for pulling the updated environment and run it in your local project
+Eg:
+```
+amplify pull --appId dc6jwhgktw8g3 --envName dev
+```
+- Update your app code
+
+#### Error
+```
+× There was an error initializing your environment.
+� Could not initialize platform for 'dev': Inaccessible host: `amplify-amplifiedtodo-dev-220448-deployment.s3.ap-northeast-1.amazonaws.com' at port `undefined'. Thi
+s service may not be available in the `ap-northeast-1' region.
+```
+
+#### How to fix?
+Internet check!
+
+## Verifying cloud sync
+### Inspec data
+Select Content from the Amplify Studio sidebar. If you have added todos from your app, you should see them show up as part of the results!
+
+### Create data
+Synchronization is bi-directional. Try creating a Todo entry from the Content screen in Amplify Studio:
+- Click Create todo
+- Fill in the form
+  - name: Sync app to cloud
+  - description: This was created remotely!
+  - isComplete: false (unchecked)
+- Click Save Todo on the form to save the new entry
+
+
 
 
 
