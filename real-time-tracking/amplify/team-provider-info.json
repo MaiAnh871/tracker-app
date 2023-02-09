@@ -1,15 +1,15 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-realtimetracking-dev-153429-authRole",
-      "UnauthRoleArn": "arn:aws:iam::651307515661:role/amplify-realtimetracking-dev-153429-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::651307515661:role/amplify-realtimetracking-dev-153429-authRole",
+      "AuthRoleName": "amplify-realtimetracking-dev-222657-authRole",
+      "UnauthRoleArn": "arn:aws:iam::651307515661:role/amplify-realtimetracking-dev-222657-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::651307515661:role/amplify-realtimetracking-dev-222657-authRole",
       "Region": "ap-northeast-2",
-      "DeploymentBucketName": "amplify-realtimetracking-dev-153429-deployment",
-      "UnauthRoleName": "amplify-realtimetracking-dev-153429-unauthRole",
-      "StackName": "amplify-realtimetracking-dev-153429",
-      "StackId": "arn:aws:cloudformation:ap-northeast-2:651307515661:stack/amplify-realtimetracking-dev-153429/9388d1d0-a854-11ed-b0fb-06e462317494",
-      "AmplifyAppId": "d37u3ypltivvcf"
+      "DeploymentBucketName": "amplify-realtimetracking-dev-222657-deployment",
+      "UnauthRoleName": "amplify-realtimetracking-dev-222657-unauthRole",
+      "StackName": "amplify-realtimetracking-dev-222657",
+      "StackId": "arn:aws:cloudformation:ap-northeast-2:651307515661:stack/amplify-realtimetracking-dev-222657/31bcc2b0-a88e-11ed-9650-027a9e3eb442",
+      "AmplifyAppId": "d3j1y3u5ppnvlh"
     }
   }
 }

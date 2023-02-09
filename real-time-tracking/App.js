@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
 
 import { Amplify, PubSub } from 'aws-amplify';
 import { AWSIoTProvider } from '@aws-amplify/pubsub';
@@ -15,19 +16,29 @@ Amplify.addPluggable(
   })
 );
 
-//Subscription
-Amplify.PubSub.subscribe('$aws/things/real-time-tracking/shadow/get/accepted').subscribe({    
-  next: data => {        
-    console.log('Message received:', data);     
-  },
-  error: error => console.error(error),    
-  close: () => console.log('Done'),  
-});
-
 export default function App() {
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    let subscription;
+    Amplify.PubSub.subscribe('$aws/things/real-time-tracking/shadow/get/accepted').subscribe({    
+      next: data => {        
+        console.log('Message received:', data.value.message);
+        setMessage(data.value.message);
+      },
+      error: error => console.error(error),    
+      close: () => console.log('Done'),  
+    });
+    return () => {
+      if (subscription) {
+        subscription.unsubscribe();
+      }
+    };
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>{message}</Text>
       <StatusBar style="auto" />
     </View>
   );
