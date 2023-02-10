@@ -38,7 +38,14 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>{message}</Text>
+      {
+        message && (
+          <View>
+            <Text>Latitude: {message.lat}</Text>
+            <Text>Longitude: {message.long}</Text>
+          </View>
+        )
+      }
       <StatusBar style="auto" />
     </View>
   );
