@@ -1,0 +1,56 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-realtimetracking-dev-222657-authRole",
+      "UnauthRoleArn": "arn:aws:iam::651307515661:role/amplify-realtimetracking-dev-222657-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::651307515661:role/amplify-realtimetracking-dev-222657-authRole",
+      "Region": "ap-northeast-2",
+      "DeploymentBucketName": "amplify-realtimetracking-dev-222657-deployment",
+      "UnauthRoleName": "amplify-realtimetracking-dev-222657-unauthRole",
+      "StackName": "amplify-realtimetracking-dev-222657",
+      "StackId": "arn:aws:cloudformation:ap-northeast-2:651307515661:stack/amplify-realtimetracking-dev-222657/31bcc2b0-a88e-11ed-9650-027a9e3eb442",
+      "AmplifyAppId": "d3j1y3u5ppnvlh"
+    }
+  },
+  "auth": {
+    "realtimetrackingd2295b3e": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-realtimetracking-dev-222657-deployment/amplify-cfn-templates/auth/realtimetrackingd2295b3e-cloudformation-template.json",
+        "logicalId": "authrealtimetrackingd2295b3e"
+      },
+      "lastPushTimeStamp": "2023-02-10T15:38:26.384Z",
+      "output": {
+        "UserPoolId": "ap-northeast-2_atANKCMgM",
+        "AppClientIDWeb": "7o1mnklfksea1ll66lrindi74m",
+        "AppClientID": "2m6ff1fks2ig9p3ulo84de1fer",
+        "IdentityPoolId": "ap-northeast-2:05d352d9-3b5c-4de2-acb7-295e6953cf4c",
+        "UserPoolArn": "arn:aws:cognito-idp:ap-northeast-2:651307515661:userpool/ap-northeast-2_atANKCMgM",
+        "IdentityPoolName": "realtimetrackingd2295b3e_identitypool_d2295b3e__dev",
+        "UserPoolName": "realtimetrackingd2295b3e_userpool_d2295b3e"
+      },
+      "lastPushDirHash": "NrUXnh3TovDXcnbmnKPJMzFC+MI="
+    }
+  }
+}
