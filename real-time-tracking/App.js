@@ -56,7 +56,14 @@ export default function App() {
           </View>
         )
       }
-      <MapView style={styles.map} />
+      <MapView 
+        style={styles.map}
+        initialRegion={{
+          latitude: 21.030270,
+          longitude: 105.781902,
+          latitudeDelta: 0.0622,
+          longitudeDelta: 0.0121,
+        }}/>
       <StatusBar style="auto" />
     </View>
   );
