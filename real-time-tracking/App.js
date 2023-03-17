@@ -19,6 +19,16 @@ Amplify.addPluggable(
 
 export default function App() {
   const [message, setMessage] = useState('');
+  const [region, setRegion] = useState({
+    latitude: 21.030332,
+    longitude: 105.781966,
+    latitudeDelta: 0.001922,
+    longitudeDelta: 0.001421
+  })
+  
+  const onRegionChange = newRegion => {
+    setRegion(newRegion);
+  };
 
   useEffect(() => {
     let subscription;
@@ -58,12 +68,9 @@ export default function App() {
       }
       <MapView 
         style={styles.map}
-        initialRegion={{
-          latitude: 21.030270,
-          longitude: 105.781902,
-          latitudeDelta: 0.0622,
-          longitudeDelta: 0.0121,
-        }}/>
+        region={region}
+        onRegionChange={onRegionChange}
+      />
       <StatusBar style="auto" />
     </View>
   );
