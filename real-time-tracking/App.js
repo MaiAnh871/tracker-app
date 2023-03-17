@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import MapView from 'react-native-maps';
+import { Marker } from 'react-native-maps';
 
 import { Amplify, PubSub } from 'aws-amplify';
 import { AWSIoTProvider } from '@aws-amplify/pubsub';
@@ -18,7 +19,7 @@ Amplify.addPluggable(
 );
 
 export default function App() {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState({ lat: 0, long: 0 });
   const [region, setRegion] = useState({
     latitude: 21.030332,
     longitude: 105.781966,
@@ -70,7 +71,16 @@ export default function App() {
         style={styles.map}
         region={region}
         onRegionChange={onRegionChange}
-      />
+        showsUserLocation={true}
+      >
+        {message && (
+          <Marker
+            coordinate={{ latitude : parseFloat(message.lat), longitude : parseFloat(message.long) }}
+            title="Real-time tracking"
+            description="The location of your asset in real-time"
+          />
+        )}
+      </MapView>
       <StatusBar style="auto" />
     </View>
   );
