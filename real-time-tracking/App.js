@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { useEffect, useState } from 'react';
-
+import MapView from 'react-native-maps';
 
 import { Amplify, PubSub } from 'aws-amplify';
 import { AWSIoTProvider } from '@aws-amplify/pubsub';
@@ -23,7 +23,16 @@ export default function App() {
   useEffect(() => {
     let subscription;
     Amplify.PubSub.subscribe('$aws/things/real-time-tracking/shadow/get/accepted').subscribe({    
-      next: data => {        
+      next: data => {      
+        /*
+        Type of message:
+        {
+        "message": {
+          "lat": "22",
+          "long": "24"
+          }
+        }
+*/  
         console.log('Message received:', data.value.message);
         setMessage(data.value.message);
       },
@@ -42,12 +51,12 @@ export default function App() {
       {
         message && (
           <View>
-            <Text>{message}</Text>
             <Text>Latitude: {message.lat}</Text>
             <Text>Longitude: {message.long}</Text>
           </View>
         )
       }
+      <MapView style={styles.map} />
       <StatusBar style="auto" />
     </View>
   );
@@ -59,5 +68,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  }
+  },
+  map: {
+    width: '100%',
+    height: '100%',
+  },
 });
