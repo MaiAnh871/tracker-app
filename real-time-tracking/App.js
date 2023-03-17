@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { useEffect, useState } from 'react';
-import MapView, { Marker } from 'react-native-maps';
+
 
 import { Amplify, PubSub } from 'aws-amplify';
 import { AWSIoTProvider } from '@aws-amplify/pubsub';
@@ -42,24 +42,9 @@ export default function App() {
       {
         message && (
           <View>
+            <Text>{message}</Text>
             <Text>Latitude: {message.lat}</Text>
             <Text>Longitude: {message.long}</Text>
-            <MapView
-              style={styles.map}
-              initialRegion={{
-                latitude: parseFloat(message.lat),
-                longitude: parseFloat(message.long),
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421
-              }}
-            >
-              <Marker
-                coordinate={{
-                  latitude: parseFloat(message.lat),
-                  longitude: parseFloat(message.long)
-                }}
-              />
-            </MapView>
           </View>
         )
       }
@@ -74,9 +59,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  map: {
-    width: '100%',
-    height: 200
-  },
+  }
 });
