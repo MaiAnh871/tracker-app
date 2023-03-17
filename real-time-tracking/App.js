@@ -19,7 +19,7 @@ Amplify.addPluggable(
 );
 
 export default function App() {
-  const [message, setMessage] = useState({ lat: 0, long: 0 });
+  const [message, setMessage] = useState('');
   const [region, setRegion] = useState({
     latitude: 21.030332,
     longitude: 105.781966,
@@ -39,8 +39,8 @@ export default function App() {
         Type of message:
         {
         "message": {
-          "lat": "22",
-          "long": "24"
+          "lat": "21.030332",
+          "long": "105.781966"
           }
         }
 */  
@@ -57,6 +57,17 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    if (message) {
+      setRegion({
+        latitude: parseFloat(message.lat),
+        longitude: parseFloat(message.long),
+        latitudeDelta: 0.001922,
+        longitudeDelta: 0.001421
+      });
+    }
+  }, [message]);
+
   return (
     <View style={styles.container}>
       {
@@ -71,7 +82,6 @@ export default function App() {
         style={styles.map}
         region={region}
         onRegionChange={onRegionChange}
-        showsUserLocation={true}
       >
         {message && (
           <Marker
