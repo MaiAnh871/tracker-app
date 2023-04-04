@@ -21,8 +21,8 @@ Amplify.addPluggable(
 export default function App() {
   const [message, setMessage] = useState('');
   const [region, setRegion] = useState({
-    latitude: 21.030332,
-    longitude: 105.781966,
+    latitude: 21.030212,
+    longitude: 105.781917,
     latitudeDelta: 0.001922,
     longitudeDelta: 0.001421
   })
