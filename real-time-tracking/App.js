@@ -103,9 +103,9 @@ export default function App() {
         {polylineCoords.length > 0 &&
           (
             <Polyline
-              coordinates={polylineCoords}
-              strokeColor="#000"
-              strokeWidth={2}
+              coordinates = {polylineCoords}
+              strokeColor = "#000"
+              strokeWidth = {2}
             />
           )
         }
