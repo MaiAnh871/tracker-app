@@ -33,7 +33,7 @@ export default function App() {
 
   useEffect(() => {
     let subscription;
-    Amplify.PubSub.subscribe('$aws/things/real-time-tracking/shadow/get/accepted').subscribe({    
+    Amplify.PubSub.subscribe('tracker/data').subscribe({    
       next: data => {      
         /*
         Type of message:
