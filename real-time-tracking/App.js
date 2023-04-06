@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import MapView from 'react-native-maps';
-import { Marker } from 'react-native-maps';
+import { Polyline, Marker } from 'react-native-maps';
 
 import { Amplify, PubSub } from 'aws-amplify';
 import { AWSIoTProvider } from '@aws-amplify/pubsub';
@@ -27,6 +27,9 @@ export default function App() {
     longitudeDelta: 0.001421
   })
   
+  const [startLocation, setStartLocation] = useState(null);
+  const [polylineCoords, setPolylineCoords] = useState([]);
+
   const onRegionChange = newRegion => {
     setRegion(newRegion);
   };
@@ -65,6 +68,20 @@ export default function App() {
         latitudeDelta: 0.001922,
         longitudeDelta: 0.001421
       });
+
+      const newCoords = [
+        ...polylineCoords,
+        {
+          latitude: parseFloat(message.lat),
+          longitude: parseFloat(message.long)
+        }
+      ];
+
+      if (startLocation === null) {
+        setStartLocation(newCoords[0]);
+      }
+
+      setPolylineCoords(newCoords);
     }
   }, [message]);
 
@@ -79,17 +96,38 @@ export default function App() {
         )
       }
       <MapView 
-        style={styles.map}
-        region={region}
-        onRegionChange={onRegionChange}
+        style = {styles.map}
+        region = {region}
+        onRegionChange = {onRegionChange}
       >
+        {polylineCoords.length > 0 &&
+          (
+            <Polyline
+              coordinates={polylineCoords}
+              strokeColor="#000"
+              strokeWidth={2}
+            />
+          )
+        }
         {message && (
           <Marker
-            coordinate={{ latitude : parseFloat(message.lat), longitude : parseFloat(message.long) }}
-            title="Real-time tracking"
-            description="The location of your asset in real-time"
+            coordinate = {{ 
+              latitude : parseFloat(message.lat), 
+              longitude : parseFloat(message.long) 
+            }}
+            title = "Real-time tracking"
+            description = "The location of your asset in real-time"
           />
         )}
+        {
+          startLocation && (
+            <Marker
+              coordinate = {startLocation}
+              title = "Start Location"
+              description = "The location where tracking started"
+            />
+          )
+        }
       </MapView>
       <StatusBar style="auto" />
     </View>
@@ -104,6 +142,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   map: {
+    ...StyleSheet.absoluteFillObject,
     width: '100%',
     height: '100%',
   },
